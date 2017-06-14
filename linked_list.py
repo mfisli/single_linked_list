@@ -5,52 +5,51 @@ class Node(object):
     def __init__(self, data, next_node=None):
         self.data = data
         self.next_node = next_node
-        print("Node created with data",data)
+        print("Node created with data: ", data)
 
-# My module
 class Head(object):
-    def __init__(self, node):
-        self.current_head = node
-        print("Head created with data", node.data)
-    def set_head(self,node):
-        self.current_head = node
-        print("New head is", node.data)
+    def __init__(self, head = None):
+        self.current_head = head
+        print("Head created.")
 
 def print_nodes(node):
-    print("(", node.data, ")", sep="",end="")
+    # check if head
+    if node.data is not None:
+        print("(", node.data, ")", sep="", end="")
     if node.next_node is not None:
-        print(" -> ",end="")
+        print(" -", node.next_node.data, "-> ", end="")
         print_nodes(node.next_node)
-    else:
-        print("\n")
+    print("\n")
 
 def considering(node1,node2):
     print(node1.data,"vs",node2.data)
 
-def add_node(head,data):
+def insert(data):
+    #make a new node
     new_node = Node(data)
-    current_node = None
-    last_node = None
-    # if bigger put in front
-    considering(new_node,head.current_head)
-    if new_node.data < head.current_head.data:
+    # if there is no head, then make new node the head
+    if head.current_head is None:
+        head.current_head = new_node
+        print("\t New node", new_node.data, "is the first.")
+    # if you are smaller than the head, then make the new node the head
+    elif new_node.data < head.current_head.data:
+        print("current head is: ", head.current_head.data)
         new_node.next_node = head.current_head
-        head.set_head(new_node)
+        print("new_node.next_node:", new_node.next_node.data)
+        head.current_head = new_node
+        print("\t New node", new_node.data, "is the the new head.")
+        print_nodes(head.current_head)
         return
-    current_node = head.current_head.next_node
-
-    while new_node.data > current_node.data: 
+    # if you are the biggest, then make the new node the last one
+    current_node = head.current_head
+    while current_node.data is not None or new_node.data > current_node.data:
         considering(new_node,current_node)
-        last_node = current_node 
         current_node = current_node.next_node
-        print("current node: (", current_node.data, ")", sep="")
-        print("last node: (", last_node.data,")", sep="")
-
-    new_node.next_node = current_node
-    last_node.next_node = new_node
+    current_node.next_node = new_node
+    print_nodes(head.current_head)
 
 
-
+    
 
 ###############################################################################
 # Main 
@@ -58,13 +57,11 @@ def add_node(head,data):
 '''
 (1) -> (2) -> (3)
 '''
-node3 = Node(4)
-node2 = Node(2, node3)
-node1 = Node(1, node2)
-head = Head(node1)
+head = Head()
+insert(3)
+insert(2)
+insert(1)
 
-print_nodes(head.current_head)
-add_node(head,3)
-print_nodes(head.current_head)
+
 
 
