@@ -1,55 +1,47 @@
 #linked_list.py
 # This program demos the data structure of a single linked ist
+from random import randint
 
-class Node(object):
-    def __init__(self, data, next_node=None):
+class Node:
+    # Node constructor to init node 
+    def __init__(self, data, next_node = None):
         self.data = data
-        self.next_node = next_node
+        self.next = next_node
         print("Node created with data: ", data)
 
-class Head(object):
+class LinkedList():
+    # Linked List constructor to init head 
     def __init__(self, head = None):
-        self.current_head = head
-        print("Head created.")
-
+        self.head = head
+        print("Linked list created.")
+    # Insert new node in sorted order 
+    def insert_sorted(self, new_node):
+        # Am I the first one here? 
+        if self.head is None:
+            new_node.next = None
+            self.head = new_node
+        # Am I smaller than the head? 
+        elif new_node.data <= self.head.data:
+            new_node.next = self.head
+            self.head = new_node
+        # Who is bigger than me? I need to be behind him. 
+        else:             
+            current_node = self.head #no need for last_node
+            while (current_node.next is not None) and (current_node.next.data < new_node.data):
+                current_node = current_node.next             
+            new_node.next = current_node.next
+            current_node.next = new_node
+        print_nodes(self.head)
+        print()
+# Recursive method to print out the nodes 
 def print_nodes(node):
-    # check if head
     if node.data is not None:
         print("(", node.data, ")", sep="", end="")
-    if node.next_node is not None:
-        print(" -", node.next_node.data, "-> ", end="")
-        print_nodes(node.next_node)
-    print("\n")
-
-def considering(node1,node2):
-    print(node1.data,"vs",node2.data)
-
-def insert(data):
-    #make a new node
-    new_node = Node(data)
-    # if there is no head, then make new node the head
-    if head.current_head is None:
-        head.current_head = new_node
-        print("\t New node", new_node.data, "is the first.")
-    # if you are smaller than the head, then make the new node the head
-    elif new_node.data < head.current_head.data:
-        print("current head is: ", head.current_head.data)
-        new_node.next_node = head.current_head
-        print("new_node.next_node:", new_node.next_node.data)
-        head.current_head = new_node
-        print("\t New node", new_node.data, "is the the new head.")
-        print_nodes(head.current_head)
-        return
-    # if you are the biggest, then make the new node the last one
-    current_node = head.current_head
-    while current_node.data is not None or new_node.data > current_node.data:
-        considering(new_node,current_node)
-        current_node = current_node.next_node
-    current_node.next_node = new_node
-    print_nodes(head.current_head)
+    if node.next is not None:
+        print(" -", node.next.data, "-> ", sep="", end="")
+        print_nodes(node.next)
 
 
-    
 
 ###############################################################################
 # Main 
@@ -57,10 +49,17 @@ def insert(data):
 '''
 (1) -> (2) -> (3)
 '''
-head = Head()
-insert(3)
-insert(2)
-insert(1)
+ll = LinkedList()
+ll.insert_sorted(Node(6))
+ll.insert_sorted(Node(2))
+ll.insert_sorted(Node(4))
+ll.insert_sorted(Node(3))
+ll.insert_sorted(Node(5))
+ll.insert_sorted(Node(1))
+
+
+
+
 
 
 
