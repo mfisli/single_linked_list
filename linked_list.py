@@ -1,4 +1,4 @@
-#ll2.py
+#linked_list.py
 import random
 #//////////////////////////////////////////////////////////////////////////////
 # Represents a node with data and a link to the next node 
@@ -36,7 +36,7 @@ class LinkedList:
             print("\tInserted", new_node.data, "after", current.data)
         self.print_nodes(self.head)
     #__________________________________________________________________________
-    # Attmpts to find a target node and deletes init
+    # Attmpts to find a target node and deletes it
     # This method could be decomposed - it's a bit long
     def delete_node(self,target):
         print("\nStarting search for target: [", target,"]")
